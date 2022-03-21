@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/topic")
@@ -23,9 +24,9 @@ class TopicController(private val topicService: TopicService) {
     fun findById(@PathVariable id: Long): ResponseEntity<Topic?> = ResponseEntity.ok(topicService.findById(id))
 
     @PostMapping
-    fun save(@RequestBody newTopicDto: NewTopicForm): ResponseEntity<Topic> {
+    fun save(@RequestBody @Valid topicForm: NewTopicForm): ResponseEntity<Topic> {
         return try {
-            ResponseEntity(topicService.save(newTopicDto), HttpStatus.CREATED)
+            ResponseEntity(topicService.save(topicForm), HttpStatus.CREATED)
         } catch (exception: RuntimeException) {
             exception.printStackTrace()
             ResponseEntity(HttpStatus.BAD_REQUEST)
