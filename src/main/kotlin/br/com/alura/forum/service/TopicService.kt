@@ -33,4 +33,10 @@ class TopicService(
                 topics[(form.id - 1).toInt()] = this
             }
     }
+
+    fun deleteById(id: Long) {
+        val topic = topics.find { it.id == id } ?: return
+
+        topics = topics.minus(topic).toMutableList()
+    }
 }
