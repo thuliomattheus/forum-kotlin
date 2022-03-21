@@ -5,9 +5,9 @@ import br.com.alura.forum.entity.User
 import org.springframework.stereotype.Component
 
 @Component
-class UserViewMapper: Mapper<NewUserForm, User> {
+class UserViewMapper {
 
-    override fun map(t: NewUserForm) = User(
+    fun map(t: NewUserForm) = User (
         id = t.id,
         name = t.name,
         email = t.email

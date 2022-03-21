@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/user")
@@ -23,7 +24,7 @@ class UserController(private val userService: UserService) {
     fun findById(@PathVariable id: Long): ResponseEntity<User?> = ResponseEntity.ok(userService.findById(id))
 
     @PostMapping
-    fun save(@RequestBody newUserDto: NewUserForm): ResponseEntity<Boolean> = ResponseEntity(
+    fun save(@RequestBody @Valid newUserDto: NewUserForm): ResponseEntity<Boolean> = ResponseEntity(
         userService.save(newUserDto),
         HttpStatus.CREATED
     )

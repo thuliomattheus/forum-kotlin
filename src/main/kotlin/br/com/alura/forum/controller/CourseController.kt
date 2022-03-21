@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/course")
@@ -23,7 +24,7 @@ class CourseController(private val courseService: CourseService) {
     fun findById(@PathVariable id: Long): ResponseEntity<Course?> = ResponseEntity.ok(courseService.findById(id))
 
     @PostMapping
-    fun save(@RequestBody newCourseDto: NewCourseForm): ResponseEntity<Boolean> = ResponseEntity(
+    fun save(@RequestBody @Valid newCourseDto: NewCourseForm): ResponseEntity<Boolean> = ResponseEntity(
         courseService.save(newCourseDto),
         HttpStatus.CREATED
     )
