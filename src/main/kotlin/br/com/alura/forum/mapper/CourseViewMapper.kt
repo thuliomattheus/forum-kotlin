@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component
 class CourseViewMapper {
 
     fun map(t: NewCourseForm) = Course (
-        id = t.id,
         name = t.name,
         category = t.category
     )

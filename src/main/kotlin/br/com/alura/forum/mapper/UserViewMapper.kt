@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component
 class UserViewMapper {
 
     fun map(t: NewUserForm) = User (
-        id = t.id,
         name = t.name,
         email = t.email
     )

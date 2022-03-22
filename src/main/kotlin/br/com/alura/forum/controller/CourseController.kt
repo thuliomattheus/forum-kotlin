@@ -3,14 +3,13 @@ package br.com.alura.forum.controller
 import br.com.alura.forum.dto.NewCourseForm
 import br.com.alura.forum.entity.Course
 import br.com.alura.forum.service.CourseService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import java.util.*
+import javax.transaction.Transactional
 import javax.validation.Valid
 
 @RestController
@@ -18,13 +17,13 @@ import javax.validation.Valid
 class CourseController(private val courseService: CourseService) {
 
     @GetMapping
-    fun findAll(): ResponseEntity<List<Course>> = ResponseEntity.ok(courseService.findAll())
+    fun findAll(pageable: Pageable): ResponseEntity<Page<Course>> = ResponseEntity.ok(courseService.findAll(pageable))
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): ResponseEntity<Course?> = ResponseEntity.ok(courseService.findById(id))
+    fun findById(@PathVariable id: Long): ResponseEntity<Optional<Course>> = ResponseEntity.ok(courseService.findById(id))
 
     @PostMapping
-    fun save(@RequestBody @Valid newCourseDto: NewCourseForm): ResponseEntity<Boolean> = ResponseEntity(
+    fun save(@RequestBody @Valid newCourseDto: NewCourseForm): ResponseEntity<Course> = ResponseEntity(
         courseService.save(newCourseDto),
         HttpStatus.CREATED
     )

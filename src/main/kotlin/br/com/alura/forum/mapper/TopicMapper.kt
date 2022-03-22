@@ -16,11 +16,10 @@ class TopicMapper(
 ) {
 
     fun map(newTopic: NewTopicForm) = Topic (
-        id = newTopic.id,
         title = newTopic.title,
         message = newTopic.message,
-        author = userService.findById(newTopic.authorId) ?: throw UserNotFoundException(),
-        course = courseService.findById(newTopic.courseId) ?: throw CourseNotFoundException(),
+        author = userService.findById(newTopic.authorId).orElseThrow { UserNotFoundException() },
+        course = courseService.findById(newTopic.courseId).orElseThrow { CourseNotFoundException() },
     )
 
     fun map(updatedTopic: UpdatedTopicForm, oldTopic: Topic) = Topic (
