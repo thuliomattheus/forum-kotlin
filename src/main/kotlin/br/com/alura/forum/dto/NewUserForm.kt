@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 data class NewUserForm(
-    @field:NotNull @field:NotBlank val name: String,
+    @field:NotBlank val name: String,
     @field:NotNull @field:Email val email: String,
+    @field:NotBlank val password: String,
 )

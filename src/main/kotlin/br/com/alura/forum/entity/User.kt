@@ -1,13 +1,18 @@
 package br.com.alura.forum.entity
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import com.fasterxml.jackson.annotation.JsonIgnore
+import javax.persistence.*
 
 @Entity(name = "forum_user")
-data class User (
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long = 0,
+class User(
     val name: String,
     val email: String,
-)
+    var password: String,
+) {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long = 0
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role")
+    var roles: List<Role> = mutableListOf()
+}

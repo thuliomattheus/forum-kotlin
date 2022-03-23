@@ -9,6 +9,7 @@ class UserViewMapper {
 
     fun map(t: NewUserForm) = User (
         name = t.name,
-        email = t.email
+        email = t.email,
+        password = t.password
     )
 }
