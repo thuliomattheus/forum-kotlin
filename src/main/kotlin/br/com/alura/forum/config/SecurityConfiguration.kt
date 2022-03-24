@@ -2,6 +2,7 @@ package br.com.alura.forum.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -23,7 +24,9 @@ class SecurityConfiguration(
     override fun configure(http: HttpSecurity?) {
         http?.run {
             authorizeRequests()
-                .antMatchers("/topics").hasRole("READ_ONLY")
+                .antMatchers("/course").hasAuthority("COURSE_READ_ONLY")
+                .antMatchers(HttpMethod.GET, "/topic").hasAuthority("TOPIC_READ_ONLY")
+                .antMatchers(HttpMethod.POST, "/topic").hasAuthority("TOPIC_READ_WRITE")
                 .anyRequest()
                 .authenticated()
             .and()

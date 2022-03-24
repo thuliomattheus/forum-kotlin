@@ -7,12 +7,12 @@ import javax.persistence.*
 class User(
     val name: String,
     val email: String,
-    var password: String,
+    @JsonIgnore var password: String,
 ) {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long = 0
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role")
     var roles: List<Role> = mutableListOf()
 }
